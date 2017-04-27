@@ -10,7 +10,7 @@ private Context context=xxApplication.getInstance();
 ```
 采用这种方式又不可避免的需要修改 ```xxApplication``` 类名。(虽然可以全局替换，懒~
 
-所以就想把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~
+所以就想把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~，具体有哪些工具类，可以下载查看api文档。
 
 ### 使用
 
