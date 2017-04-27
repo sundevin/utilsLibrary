@@ -17,7 +17,9 @@ private Context context=xxApplication.getInstance();
 ### 依赖
 1,gradle
 ```
-compile 'com.sundevin:utilslibrary:1.0.0'
+dependencies {
+  compile 'com.sundevin:utilslibrary:1.0.1'
+}
 ```
 
 2,下载 library,以 module 的方式导入。
