@@ -43,8 +43,8 @@ public class FastJsonUtils {
      * @param cls
      * @return
      */
-    public static List getList(String json, Class cls) {
-        List list;
+    public static <T> List<T> getList(String json, Class<T> cls) {
+        List<T> list;
         try {
             list = JSON.parseArray(json, cls);
             if (list != null) {
@@ -53,7 +53,7 @@ public class FastJsonUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList();
+        return new ArrayList<>();
     }
 
 

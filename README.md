@@ -6,18 +6,23 @@ A tools library for Android.
 ### 初衷
 每次新开项目时总是不可避免的从新项目中拷贝一些常用的工具类，拷贝到新项目的时候，又有很多包名导入错误，需要修改导包，
 而工具类里经常又会用到 ```Context``` 参数，
-个人比较懒，不想传参，一般会在工具类里写上一下代码来获取 ```Context```:
+个人比较懒，不想传参，一般会在工具类里写上以下代码来获取 ```Context```:
 ```
 private Context context=xxApplication.getInstance();
 ```
 采用这种方式又不可避免的需要修改 ```xxApplication``` 类名。(虽然可以全局替换，懒~
 
-所以就想把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~，具体有哪些工具类，可以下载查看api文档。
+所以就想把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~，具体有哪些工具类，可以下载后查看api文档。
+
+### 依赖
+1,gradle
+```
+compile 'com.sundevin:utilslibrary:1.0.0'
+```
+
+2,下载 library,以 module 的方式导入。
 
 ### 使用
-
-#### 依赖
-下载 library,以 module 的方式导入。
 
 #### 初始化
 在项目的 Application 进行初始化

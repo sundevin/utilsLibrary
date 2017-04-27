@@ -2,7 +2,7 @@ apply plugin: rootProject.ext.plugin.maven
 apply plugin: rootProject.ext.plugin.bintray
 
 // 项目引用的版本号，比如compile 'com.sundevin:picturepicker:1.0.0'中的1.0.0就是这里配置的。
-version = "1.0.0"
+version = "1.0.1"
 // 唯一包名，比如compile 'com.sundevin:picturepicke:1.0.0'中的com.sundevin。
 group = "com.sundevin"
 
@@ -81,7 +81,7 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        repo = "utilsLibrary"
+        repo = "UtilsLibrary"
         // 上传到maven库。（这里要特别注意，如果写了maven报404错误，请在bintray创建一个仓库，这里填改成你创建的仓库的名字，如何创建请看下图。）
         name = "utilsLibrary"
         // 发布到Bintray上的项目名字，这里是项目中module的名字，不是compile 'com.sundevin:picturepicker:1.0.0'中的 picturepicker。
@@ -91,5 +91,7 @@ bintray {
         licenses = ["Apache-2.0"] //开源协议
         publish = true // 是否是公开项目。
     }
+
+    //配置完成后 命令 gradlew bintrayUpload 等待完成即可
 }
 
