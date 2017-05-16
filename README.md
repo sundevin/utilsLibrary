@@ -14,11 +14,29 @@ private Context context=xxApplication.getInstance();
 
 所以就想把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~，具体有哪些工具类，可以下载后查看api文档。
 
+### 更新日志
+
+- 1.0.2
+    ```
+     2017/5/16
+
+    删除不常用的权限 uses-permission android:name="android.permission.RECORD_AUDIO"
+    minSdkVersion 由19改为14
+    ```
+
+- 1.0.1
+    ```
+        2017/4/28
+
+        修复 fastJson 泛型问题
+    ```
+
+
 ### 依赖
 1,gradle
 ```
 dependencies {
-  compile 'com.sundevin:utilslibrary:1.0.1'
+  compile 'com.sundevin:utilslibrary:1.0.2'
 }
 ```
 
@@ -40,7 +58,6 @@ UtilManager.init(this);
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
