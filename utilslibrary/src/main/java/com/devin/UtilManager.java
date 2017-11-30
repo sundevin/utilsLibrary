@@ -1,6 +1,5 @@
 package com.devin;
 
-import android.app.Application;
 import android.content.Context;
 
 /**
@@ -12,17 +11,17 @@ import android.content.Context;
 
 public class UtilManager {
 
-    private static Context context;
+    private static Context mContext;
 
     /**
      * 初始化工具类集合
-     * @param application  Application
+     * @param context  context
      */
-    public static void init(Application application) {
-        context = application;
+    public static void init(Context context) {
+        mContext = context.getApplicationContext();
     }
 
     public static Context getContext() {
-        return context;
+        return mContext;
     }
 }

@@ -1,5 +1,6 @@
 package com.devin.util;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,9 +11,14 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Base64;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
+import com.devin.UtilManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -61,12 +67,13 @@ public class BitmapUtils {
 
     /**
      * 缩放图片
+     *
      * @param bitmap
      * @param wf
      * @param hf
      * @return
      */
-    public static Bitmap zoom(Bitmap bitmap, float wf, float hf) {
+    public static Bitmap zoomImg(Bitmap bitmap, float wf, float hf) {
         Matrix matrix = new Matrix();
         matrix.postScale(wf, hf);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
@@ -80,7 +87,7 @@ public class BitmapUtils {
      * @param roundPX
      * @return
      */
-    public static Bitmap getRCB(Bitmap bitmap, float roundPX) {
+    public static Bitmap getRoundBitmap(Bitmap bitmap, float roundPX) {
         // RCB means
         // Rounded
         // Corner Bitmap
@@ -110,7 +117,6 @@ public class BitmapUtils {
     public static Bitmap compressBitmap(Bitmap b) {
 
         Bitmap bitmap = null;
-
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         b.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
@@ -164,7 +170,6 @@ public class BitmapUtils {
                 bitmap = BitmapFactory.decodeFile(path, options);
                 break;
             }
-
             i += 1;
         }
         return bitmap;
@@ -193,6 +198,8 @@ public class BitmapUtils {
                 case ExifInterface.ORIENTATION_ROTATE_270:
                     degrees = 270;
                     break;
+                default:
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -213,14 +220,16 @@ public class BitmapUtils {
 
         Bitmap bitmap;
         try {
-            bitmap = BitmapFactory.decodeFile(imgPath);//根据Path读取资源图片
+            //根据Path读取资源图片
+            bitmap = BitmapFactory.decodeFile(imgPath);
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
             return null;
         }
 
         Matrix matrix = new Matrix();
-        matrix.postRotate(+90); /*翻转90度*/
+        //翻转90度
+        matrix.postRotate(+90);
         try {
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         } catch (OutOfMemoryError e) {
@@ -259,13 +268,55 @@ public class BitmapUtils {
      * @return true 是，false 不是。
      */
     private boolean isImageFile(String path) {
-        if (TextUtils.isEmpty(path))
+        if (TextUtils.isEmpty(path)) {
             return false;
+        }
         String[] imgSuffix = {".jpg", ".jpeg", ".png", ".bmp"};
         for (String str : imgSuffix) {
             if (path.toLowerCase().endsWith(str)) {
                 return true;
             }
+        }
+        return false;
+    }
+
+
+    /**
+     * 下载并保存图片（需子线程调用）
+     *
+     * @param url      图片url
+     * @param dirPath  存储路径
+     * @param fileName 图片名称
+     * @return 下载结果
+     */
+    public static boolean downloadImg(String url, String dirPath, String fileName) {
+
+        try {
+            File imgFile = Glide.with(UtilManager.getContext()).load(url).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+
+            if (imgFile == null) {
+                return false;
+            }
+
+            File dir = new File(dirPath);
+            if (!dir.exists()) {
+                boolean b = dir.mkdir();
+                if (!b) {
+                    return false;
+                }
+            }
+            File file = new File(dirPath, fileName);
+            boolean b = FileUtils.copyFile(imgFile, file);
+            if (b) {
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                Uri uri = Uri.fromFile(file);
+                intent.setData(uri);
+                UtilManager.getContext().sendBroadcast(intent);
+            }
+
+            return b;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

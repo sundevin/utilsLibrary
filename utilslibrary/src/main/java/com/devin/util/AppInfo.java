@@ -27,6 +27,7 @@ public class AppInfo {
 
     /**
      * 获取当前应用 的包名
+     *
      * @return
      */
     public static String getPackageName() {
@@ -164,4 +165,30 @@ public class AppInfo {
         return TextUtils.equals(packageName, getPackageName());
     }
 
+
+    /**
+     * 获取当前进程名
+     */
+    public static String getCurrentProcessName() {
+        int pid = android.os.Process.myPid();
+        String processName = "";
+        ActivityManager manager = (ActivityManager) UtilManager.getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        if (manager != null) {
+            for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
+                if (process.pid == pid) {
+                    processName = process.processName;
+                }
+            }
+        }
+        return processName;
+    }
+
+    /**
+     * 包名判断是否为主进程
+     */
+    public static boolean isMainProcess() {
+        return UtilManager.getContext().getPackageName().equals(getCurrentProcessName());
+    }
 }
+
+

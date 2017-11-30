@@ -6,6 +6,8 @@ import android.os.StatFs;
 import com.devin.UtilManager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 /**
  * <p>Description: 关于File的一些工具类
@@ -55,9 +57,9 @@ public class FileUtils {
         if (hasSDCard()) {
             StatFs stat = new StatFs(getSDPath());
             // 获取空闲的数据块的数量
-            long availableBlocks = stat.getAvailableBlocksLong() - 4;
+            long availableBlocks = stat.getAvailableBlocks() - 4;
             // 获取单个数据块的大小（byte）
-            long freeBlocks = stat.getAvailableBlocksLong();
+            long freeBlocks = stat.getAvailableBlocks();
             return freeBlocks * availableBlocks;
         }
         return 0;
@@ -125,6 +127,33 @@ public class FileUtils {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * 复制文件
+     *
+     * @param fromFile
+     * @param toFile
+     */
+    public static boolean copyFile(File fromFile, File toFile) {
+
+        try {
+            FileInputStream ins = new FileInputStream(fromFile);
+            FileOutputStream out = new FileOutputStream(toFile);
+            byte[] b = new byte[1024];
+            int n = 0;
+            while ((n = ins.read(b)) != -1) {
+                out.write(b, 0, n);
+            }
+
+            ins.close();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 

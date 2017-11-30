@@ -27,6 +27,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * <p>Description: 关于设备信息的一些工具类
  * <p>Company：
@@ -78,7 +79,8 @@ public class DeviceInfo {
     public static boolean isScreenOn() {
 
         PowerManager pm = (PowerManager) UtilManager.getContext().getSystemService(Context.POWER_SERVICE);
-        return pm.isScreenOn();//如果为true，则表示屏幕“亮”了，否则屏幕“暗”了。
+        //如果为true，则表示屏幕“亮”了，否则屏幕“暗”了。
+        return pm.isScreenOn();
     }
 
     /**
@@ -128,26 +130,26 @@ public class DeviceInfo {
      */
     public static String getDeviceInfo() {
         StringBuffer sb = new StringBuffer();
-        sb.append("主板：" + Build.BOARD);
-        sb.append("\n系统启动程序版本号：" + Build.BOOTLOADER);
-        sb.append("\n系统定制商：" + Build.BRAND);
-        sb.append("\ncpu指令集：" + Build.CPU_ABI);
-        sb.append("\ncpu指令集2" + Build.CPU_ABI2);
-        sb.append("\n设置参数：" + Build.DEVICE);
-        sb.append("\n显示屏参数：" + Build.DISPLAY);
-        sb.append("\n无线电固件版本：" + Build.getRadioVersion());
-        sb.append("\n硬件识别码：" + Build.FINGERPRINT);
-        sb.append("\n硬件名称：" + Build.HARDWARE);
-        sb.append("\nHOST:" + Build.HOST);
-        sb.append("\n修订版本列表：" + Build.ID);
-        sb.append("\n硬件制造商：" + Build.MANUFACTURER);
-        sb.append("\n版本：" + Build.MODEL);
-        sb.append("\n硬件序列号：" + Build.SERIAL);
-        sb.append("\n手机制造商：" + Build.PRODUCT);
-        sb.append("\n描述Build的标签：" + Build.TAGS);
-        sb.append("\nTIME:" + Build.TIME);
-        sb.append("\nbuilder类型：" + Build.TYPE);
-        sb.append("\nUSER:" + Build.USER);
+        sb.append("主板：").append(Build.BOARD);
+        sb.append("\n系统启动程序版本号：").append(Build.BOOTLOADER);
+        sb.append("\n系统定制商：").append(Build.BRAND);
+        sb.append("\ncpu指令集：").append(Build.CPU_ABI);
+        sb.append("\ncpu指令集2").append(Build.CPU_ABI2);
+        sb.append("\n设置参数：").append(Build.DEVICE);
+        sb.append("\n显示屏参数：").append(Build.DISPLAY);
+        sb.append("\n无线电固件版本：").append(Build.getRadioVersion());
+        sb.append("\n硬件识别码：").append(Build.FINGERPRINT);
+        sb.append("\n硬件名称：").append(Build.HARDWARE);
+        sb.append("\nHOST:").append(Build.HOST);
+        sb.append("\n修订版本列表：").append(Build.ID);
+        sb.append("\n硬件制造商：").append(Build.MANUFACTURER);
+        sb.append("\n版本：").append(Build.MODEL);
+        sb.append("\n硬件序列号：").append(Build.SERIAL);
+        sb.append("\n手机制造商：").append(Build.PRODUCT);
+        sb.append("\n描述Build的标签：").append(Build.TAGS);
+        sb.append("\nTIME:").append(Build.TIME);
+        sb.append("\nbuilder类型：").append(Build.TYPE);
+        sb.append("\nUSER:").append(Build.USER);
         return sb.toString();
     }
 
@@ -159,8 +161,8 @@ public class DeviceInfo {
     public long getTotalInternalMemorySize() {
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
-        long blockSize = stat.getBlockSizeLong();
-        long totalBlocks = stat.getBlockSizeLong();
+        long blockSize = stat.getBlockSize();
+        long totalBlocks = stat.getBlockSize();
         return totalBlocks * blockSize;
     }
 
@@ -362,7 +364,8 @@ public class DeviceInfo {
             FeatureInfo[] features = pm.getSystemAvailableFeatures();
             if (features != null) {
                 for (FeatureInfo f : features) {
-                    if (f != null && PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) { //判断设备是否支持闪光灯
+                    //判断设备是否支持闪光灯
+                    if (f != null && PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) {
                         return true;
                     }
                 }
