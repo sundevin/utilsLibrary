@@ -16,12 +16,21 @@ public class ToastUtils {
 
     private static Toast toast;
 
+
+    /**
+     * Make a standard toast that just contains a text view with the text from a resource.
+     * @param resId The resource id of the string resource to use.  Can be formatted tex
+     */
+    public static void showCenter(@StringRes int resId) {
+        showCenter(UtilManager.getContext().getResources().getString(resId));
+    }
+
     /**
      * Make a standard toast that just contains a text view.
      *
      * @param text Toast str
      */
-    public static void show(String text) {
+    public static void showCenter(String text) {
         if (toast == null) {
             toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -30,6 +39,8 @@ public class ToastUtils {
         toast.show();
     }
 
+
+
     /**
      * Make a standard toast that just contains a text view with the text from a resource.
      * @param resId The resource id of the string resource to use.  Can be formatted tex
@@ -37,4 +48,18 @@ public class ToastUtils {
     public static void show(@StringRes int resId) {
         show(UtilManager.getContext().getResources().getString(resId));
     }
+
+    /**
+     * Make a standard toast that just contains a text view.
+     *
+     * @param text Toast str
+     */
+    public static void show(String text) {
+        if (toast == null) {
+            toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
+        }
+        toast.setText(text);
+        toast.show();
+    }
+
 }
