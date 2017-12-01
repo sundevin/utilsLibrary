@@ -3,9 +3,11 @@ package com.devin.util;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.wifi.WifiManager;
@@ -25,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,16 +115,49 @@ public class DeviceInfo {
      */
     public static List<String> getPackageNames() {
         List<String> packageNameList = new ArrayList<>();
-        PackageManager manager = UtilManager.getContext().getPackageManager();// 得到包管理器
-        List<PackageInfo> packageInfos = manager.getInstalledPackages(0);// 所有安装在系统上的应用的程序包信息
+        // 得到包管理器
+        PackageManager manager = UtilManager.getContext().getPackageManager();
+        // 所有安装在系统上的应用的程序包信息
+        List<PackageInfo> packageInfos = manager.getInstalledPackages(0);
         for (PackageInfo packageInfo : packageInfos) {
 
 //            String appName = (String) packageInfo.applicationInfo
 //                    .loadLabel(manager);// 得到应用名
-            packageNameList.add(packageInfo.packageName);//得到包名
+            //得到包名
+            packageNameList.add(packageInfo.packageName);
         }
         return packageNameList;
     }
+
+
+    /**
+     * 获取设备里所有软件
+     *
+     * @return
+     */
+    public static List<PackageInfo> getAllPackageInfo() {
+        PackageManager manager = UtilManager.getContext().getPackageManager();
+        // 所有安装在系统上的应用的程序包信息
+        return manager.getInstalledPackages(0);
+    }
+
+    /**
+     * 判断 App 是否是系统应用
+     *
+     * @param packageName 包名
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isSystemApp(final String packageName) {
+        try {
+            PackageManager pm = UtilManager.getContext().getPackageManager();
+            ApplicationInfo ai = pm.getApplicationInfo(packageName, 0);
+            return ai != null && (ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * 获取设备硬件的基本信息 可用于打印设备信息
@@ -254,6 +290,50 @@ public class DeviceInfo {
         }
         return statusHeight;
     }
+
+
+    /**
+     * 获取NavigationBar的高度：
+     *
+     * @return int
+     */
+    public static int getNavigationBarHeight() {
+        int navigationBarHeight = 0;
+        if (hasNavigationBar()) {
+            Resources rs = UtilManager.getContext().getResources();
+            int id = rs.getIdentifier("navigation_bar_height", "dimen", "android");
+            if (id > 0) {
+                navigationBarHeight = rs.getDimensionPixelSize(id);
+            }
+        }
+        return navigationBarHeight;
+    }
+
+
+    /**
+     * 判断屏幕下方是否有虚拟按键
+     *
+     * @return bool
+     */
+    public static boolean hasNavigationBar() {
+
+        boolean hasNavigationBar = false;
+        Resources rs = UtilManager.getContext().getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            return "0".equals(navBarOverride);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hasNavigationBar;
+    }
+
 
     /**
      * 获取cpu型号，

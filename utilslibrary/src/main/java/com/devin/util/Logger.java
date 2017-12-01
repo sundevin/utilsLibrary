@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class Logger {
 
-    public static boolean log_enabled = true;
-    private static final String DEFAULT_TAG = "----------";
+    private static boolean logEnabled = true;
+    private static String DEFAULT_TAG = "----------";
 
     private static final int DEBUG = 1;
     private static final int ERROR = 2;
@@ -27,10 +27,31 @@ public class Logger {
     private @interface LogPriority {
     }
 
+
     private static final int MSG_MAX_LENGTH = 800;
+
+
+    /**
+     * 设置 defaultTag，全局生效
+     *
+     * @param defaultTag
+     */
+    public static void setDefaultTag(String defaultTag) {
+        DEFAULT_TAG = defaultTag;
+    }
+
+    /**
+     * 设置是否开启日志打印 全局生效
+     *
+     * @param logEnabled
+     */
+    public static void setLogEnabled(boolean logEnabled) {
+        Logger.logEnabled = logEnabled;
+    }
 
     /**
      * 默认 tag "----------"
+     *
      * @param msg msg
      */
     public static void d(String msg) {
@@ -38,9 +59,8 @@ public class Logger {
     }
 
     /**
-     *
      * @param tag tag
-     * @param msg  msg
+     * @param msg msg
      */
     public static void d(String tag, String msg) {
         d(tag, msg, null);
@@ -56,9 +76,21 @@ public class Logger {
         e(DEFAULT_TAG, msg);
     }
 
+
     public static void e(String tag, String msg) {
         e(tag, msg, null);
     }
+
+
+    public static void e(Throwable tr) {
+        e("", tr);
+    }
+
+
+    public static void e(String msg, Throwable tr) {
+        e(DEFAULT_TAG, msg, tr);
+    }
+
 
     public static void e(String tag, String msg, Throwable tr) {
         printLog(tag, msg, tr, ERROR);
@@ -73,7 +105,9 @@ public class Logger {
      * @param logPriority logPriority
      */
     private static void printLog(String tag, String msg, Throwable tr, @LogPriority int logPriority) {
-        if (!log_enabled) return;
+        if (!logEnabled) {
+            return;
+        }
         if (logPriority == DEBUG) {
             Log.d(tag, "__________________________________");
         } else {

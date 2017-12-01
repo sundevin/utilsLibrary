@@ -96,8 +96,9 @@ public class ActivityUtils {
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             activity.getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
             view.setPadding(view.getPaddingLeft(),
-                    DeviceInfo.getStatusHeight(activity),
+                    DeviceInfo.getStatusHeight(activity)+view.getPaddingTop(),
                     view.getPaddingRight(),
                     view.getPaddingBottom());
         }

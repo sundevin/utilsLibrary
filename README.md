@@ -1,9 +1,11 @@
 # utilsLibrary
 A tools library for Android.
 
+[ ![Download](https://api.bintray.com/packages/sundevin/UtilsLibrary/utilsLibrary/images/download.svg) ](https://bintray.com/sundevin/UtilsLibrary/utilsLibrary/_latestVersion)
+
 整理了一些安卓项目开发中常用的一些工具类，将持续更新，欢迎star.
 
-### 初衷
+### 说明
 每次新开项目时总是不可避免的从新项目中拷贝一些常用的工具类，拷贝到新项目的时候，又有很多包名导入错误，需要修改导包，
 而工具类里经常又会用到 ```Context``` 参数，
 个人比较懒，不想传参，一般会在工具类里写上以下代码来获取 ```Context```:
@@ -12,7 +14,7 @@ private Context context=xxApplication.getInstance();
 ```
 采用这种方式又不可避免的需要修改 ```xxApplication``` 类名。(虽然可以全局替换，懒~
 
-所以就想把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~，具体有哪些工具类，可以下载后查看api文档。
+所以把常用的工具类整理出来，以 module 或者 aar 的方式使用，这样就能避免以上问题啦~，具体有哪些工具类，可以下载后查看api文档。
 
 ### 更新日志
 

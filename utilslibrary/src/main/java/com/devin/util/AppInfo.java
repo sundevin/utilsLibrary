@@ -120,14 +120,6 @@ public class AppInfo {
     }
 
 
-    /**
-     * 获取当前app的友盟渠道,以umeng为例，key默认为UMENG_CHANNE
-     *
-     * @return 失败时为null
-     */
-    public static String getUmengChannel() {
-        return getMetaData("UMENG_CHANNEL");
-    }
 
 
     /**
