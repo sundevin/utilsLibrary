@@ -25,6 +25,5 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         textView = (TextView) findViewById(R.id.textView);
-        ll = (LinearLayout) findViewById(R.id.ll);
     }
 }
