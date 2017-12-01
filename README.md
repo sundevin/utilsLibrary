@@ -52,7 +52,8 @@ A tools library for Android.
 1, gradle (推荐)
 ```
 dependencies {
-  compile 'com.sundevin:utilslibrary:1.0.2'
+    //latestVersion 替换为最新版本号
+    compile 'com.sundevin:utilslibrary:latestVersion'
 }
 ```
 
