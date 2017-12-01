@@ -76,13 +76,14 @@ dependencies {
 ```
 
 #### 2,第三方依赖问题
-工具类里有几个比较特殊的工具类,分别是汉字转拼音、`Gson`、`FastJson`,这三个工具类均需要依赖第三方库，
+工具类里有几个比较特殊的工具类,分别是汉字转拼音、`Gson`、`FastJson` 和图片加载，这几个工具类均需要依赖第三方库，
 如果项目里有使用这其中的工具类，则需要在自己项目的 `gradle.buil` 里添加相关依赖。
 如：
 ```
     compile 'com.belerweb:pinyin4j:2.5.0'
     compile 'com.google.code.gson:gson:2.7'
-    compile'com.alibaba:fastjson:1.2.8'
+    compile 'com.alibaba:fastjson:1.2.8'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 ```
 ####  其他
 library 里有本人写的，也有他人提供后由本人整理的，有些方法可能没有经过验证，可能会出现 bug，如果出现 bug，请及时提 issue，我会及时处理。
