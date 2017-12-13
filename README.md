@@ -26,7 +26,7 @@ A tools library for Android.
 ```
 - 2.0.1
 ```
-    2017/12/31
+    2017/11/30
     1,解决 application 标签冲突问题
     2,加入以下工具类：
     ActivityUtils 状态栏颜色设置，透明状态栏，隐藏状态栏，禁止截屏，禁止黑屏，view截图
