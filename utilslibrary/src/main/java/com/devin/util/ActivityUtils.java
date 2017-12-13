@@ -138,6 +138,14 @@ public class ActivityUtils {
     }
 
     /**
+     * 显示状态栏
+     * @param activity
+     */
+    public  static  void  showStatusBar(Activity activity) {
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
      * 应用运行时，保持屏幕高亮，不锁屏
      *
      * @param activity

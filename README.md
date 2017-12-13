@@ -18,34 +18,34 @@ A tools library for Android.
 
 ---
 ### 更新日志
+- 2.0.2
+```
+    2017/12/13
+    ActivityUtils  显示状态栏
+    更改 shapeUtils 为 ShapeFactory，代码生成 shape 更方便。
+```
 - 2.0.1
 ```
     2017/12/31
     1,解决 application 标签冲突问题
     2,加入以下工具类：
-    //activity 状态栏颜色设置，透明状态栏，隐藏状态栏，禁止截屏，禁止黑屏，view截图（ActivityUtils），导航栏是否存在及高度， 
-    //ImageLoader（Glide 图片加载）
-    //进程名称获取及主进程判断（AppInfo）
-    //MainLooper（主线程切换）
-    //扬声器判断（SpeakerUtils）
-    //下载图片（BitmapUtils）
-    //补充时间转换的方法（DateUtils）
-    //虚拟按键高度
-    //日志开关修改为set方式
-    //增加代码生成shape（shapeUtils）
-    
+    ActivityUtils 状态栏颜色设置，透明状态栏，隐藏状态栏，禁止截屏，禁止黑屏，view截图
+    DeviceInfo 虚拟按键是否存在及高度，
+    ImageLoader（Glide 图片加载）
+    进程名称获取及主进程判断（AppInfo）
+    MainLooper（主线程切换）
+    扬声器判断（SpeakerUtils）
+    下载图片（BitmapUtils）
+    补充时间转换的方法（DateUtils）
+    虚拟按键高度
+    日志开关修改为set方式
+    增加代码生成shape（shapeUtils）
 ```
 - 1.0.2
 ```
     2017/5/16
     删除不常用的权限 uses-permission android:name="android.permission.RECORD_AUDIO"
     minSdkVersion 由19改为14
-```
-
-- 1.0.1
-```
-    2017/4/28
-    修复 fastJson 泛型问题
 ```
 ---
 ### 依赖
