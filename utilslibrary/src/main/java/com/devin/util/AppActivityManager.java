@@ -48,7 +48,7 @@ public class AppActivityManager {
     }
 
     /**
-     * 添加Activity到堆栈
+     * 添加Activity到堆栈 一定要记得调用 {@link AppActivityManager#removeActivity },注意内存泄漏问题
      *
      * @param activity
      */
@@ -70,7 +70,7 @@ public class AppActivityManager {
     }
 
     /**
-     * 获取堆栈中最后一个压入Activity
+     * 获取堆栈中最后一个压入Activity,如果为空则返回null
      *
      * @return
      */
@@ -128,6 +128,7 @@ public class AppActivityManager {
 
     /**
      * 结束指定的Activity
+     *
      * @param activity
      */
     private void finishActivity(Activity activity) {

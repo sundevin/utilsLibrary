@@ -1,6 +1,7 @@
 package com.devin.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -37,6 +38,34 @@ public class DateUtils {
     public static String getYMDHM_3(long millisecond) {
         return getFormatDate("yy.MM.dd HH:mm", millisecond);
     }
+
+
+
+    /**
+     * @param millisecond 毫秒
+     * @return 返回 yy-MM-dd
+     */
+    public static String getYMD(long millisecond) {
+        return getFormatDate("yy-MM-dd", millisecond);
+    }
+
+    /**
+     * @param millisecond 毫秒
+     * @return 返回 HH:mm:ss
+     */
+    public static String getHMS(long millisecond) {
+        return getFormatDate("HH:mm:ss", millisecond);
+    }
+
+
+    /**
+     * @param millisecond 毫秒
+     * @return 返回 HH:mm
+     */
+    public static String getHM(long millisecond) {
+        return getFormatDate("HH:mm", millisecond);
+    }
+
 
 
     /**
@@ -80,7 +109,6 @@ public class DateUtils {
     }
 
 
-
     /**
      * 将时间字符串转为时间戳
      * <p>time格式为pattern</p>
@@ -121,6 +149,28 @@ public class DateUtils {
     public static String date2Str(Date date, String pattern) {
         return new SimpleDateFormat(pattern, Locale.getDefault()).format(date);
     }
+
+
+
+
+    public static final String[] WEEK_1 = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+    public static final String[] WEEK_2 = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+
+    /**
+     * 日期获取星期
+     * @param date
+     * @return 0~6
+     */
+    public static int dateToWeek(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0) {
+            w = 0;
+        }
+        return w;
+    }
+
 
 
 

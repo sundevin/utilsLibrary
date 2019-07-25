@@ -28,7 +28,7 @@ public class Logger {
     }
 
 
-    private static final int MSG_MAX_LENGTH = 800;
+    private static final int MSG_MAX_LENGTH = 900;
 
 
     /**
@@ -62,6 +62,20 @@ public class Logger {
      * @param tag tag
      * @param msg msg
      */
+    public static void d(String tag, String... msg) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : msg) {
+            stringBuilder.append(s);
+        }
+
+        d(tag, stringBuilder.toString());
+    }
+
+    /**
+     * @param tag tag
+     * @param msg msg
+     */
     public static void d(String tag, String msg) {
         d(tag, msg, null);
     }
@@ -74,6 +88,20 @@ public class Logger {
 
     public static void e(String msg) {
         e(DEFAULT_TAG, msg);
+    }
+
+    /**
+     * @param tag tag
+     * @param msg msg
+     */
+    public static void e(String tag, String... msg) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : msg) {
+            stringBuilder.append(s);
+        }
+
+        d(tag, stringBuilder.toString());
     }
 
 
@@ -117,9 +145,9 @@ public class Logger {
 
         for (String str : splitLargeMsg(msg)) {
             if (logPriority == DEBUG) {
-                Log.d(tag, str + "\t");
+                Log.d(tag, str);
             } else {
-                Log.e(tag, str + "\t");
+                Log.e(tag, str);
             }
         }
 

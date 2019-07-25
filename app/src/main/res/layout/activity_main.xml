@@ -16,4 +16,13 @@
         android:text="Hello World!"
         android:textSize="20sp" />
 
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="#00f" />
+
 </LinearLayout>

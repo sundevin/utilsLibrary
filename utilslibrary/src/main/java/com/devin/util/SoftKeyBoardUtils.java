@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.devin.UtilManager;
 
@@ -21,12 +20,12 @@ public class SoftKeyBoardUtils {
     /**
      * 打开软键盘
      *
-     * @param editText 输入框
+     * @param view 为接受软键盘输入的视图
      */
-    public static void openKeybord(EditText editText) {
+    public static void openKeybord(View view) {
         InputMethodManager imm = (InputMethodManager) UtilManager.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(editText, InputMethodManager.RESULT_SHOWN);
+        imm.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
                 InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
@@ -41,7 +40,7 @@ public class SoftKeyBoardUtils {
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
 
         View view = activity.getCurrentFocus();
-        if (view != null) {
+        if (view != null && imm != null) {
             imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
         }
     }
@@ -49,7 +48,8 @@ public class SoftKeyBoardUtils {
 
     /**
      * 监听软键盘的显示与隐藏
-     * @param activity  activity
+     *
+     * @param activity                     activity
      * @param onSoftKeyBoardChangeListener onSoftKeyBoardChangeListener
      */
     public static void setSoftKeyBoardeListener(Activity activity, final OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
@@ -61,6 +61,7 @@ public class SoftKeyBoardUtils {
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             int rootViewVisibleHeight;
+
             @Override
             public void onGlobalLayout() {
                 //获取当前根视图在屏幕上显示的大小
@@ -101,6 +102,7 @@ public class SoftKeyBoardUtils {
 
     public interface OnSoftKeyBoardChangeListener {
         void keyBoardShow(int height);
+
         void keyBoardHide(int height);
     }
 

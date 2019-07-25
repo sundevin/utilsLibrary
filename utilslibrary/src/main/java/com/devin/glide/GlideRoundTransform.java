@@ -4,40 +4,41 @@ package com.devin.glide;
  * Created by Devin Sun on 2016/11/7.
  */
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+
+import java.security.MessageDigest;
 
 
-public class GlideRoundTransform extends BitmapTransformation {
-    private  float radius = 0f;
+public class GlideRoundTransform extends CenterCrop {
+    private float radius;
 
-    public GlideRoundTransform(Context context) {
-        this(context, 5);
-    }
 
-    public GlideRoundTransform(Context context, int dp) {
-        super(context);
-        this.radius= context.getResources().getDisplayMetrics().density*dp;
+    public GlideRoundTransform(int dp) {
+        super();
+        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+
     }
 
     @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        return roundCrop(pool, toTransform);
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+        Bitmap transform = super.transform(pool, toTransform, outWidth, outHeight);
+        return roundCrop(pool, transform);
     }
 
-    private  Bitmap roundCrop(BitmapPool pool, Bitmap source) {
-        if (source == null) return null;
-        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+    private Bitmap roundCrop(BitmapPool pool, Bitmap source) {
+        if (source == null) {
+            return null;
         }
+        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
@@ -47,9 +48,10 @@ public class GlideRoundTransform extends BitmapTransformation {
         return result;
     }
 
+
     @Override
-    public String getId() {
-        return getClass().getName() + Math.round(radius);
+    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+
     }
 }
 

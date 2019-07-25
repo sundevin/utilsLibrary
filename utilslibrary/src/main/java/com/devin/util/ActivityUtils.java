@@ -85,11 +85,13 @@ public class ActivityUtils {
 
 
     /**
+     * 过时：APP 基本上不在兼容 21一下了
      * 设置透明状态栏并对某个view 拉伸，达到沉浸式状态栏的效果。仅支持19(含)~21（不含），
      * 5.0及以上版本建议使用 {@link #setStatusBarColor(Activity, int)}
      *
      * @param view
      */
+    @Deprecated
     public static void setTranslucentStatus(Activity activity, View view) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
@@ -98,7 +100,7 @@ public class ActivityUtils {
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
             view.setPadding(view.getPaddingLeft(),
-                    DeviceInfo.getStatusHeight(activity)+view.getPaddingTop(),
+                    DeviceInfo.getStatusHeight(activity) + view.getPaddingTop(),
                     view.getPaddingRight(),
                     view.getPaddingBottom());
         }
@@ -139,9 +141,10 @@ public class ActivityUtils {
 
     /**
      * 显示状态栏
+     *
      * @param activity
      */
-    public  static  void  showStatusBar(Activity activity) {
+    public static void showStatusBar(Activity activity) {
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
