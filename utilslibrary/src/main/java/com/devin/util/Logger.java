@@ -20,15 +20,16 @@ public class Logger {
     private static String DEFAULT_TAG = "----------";
 
     private static final int DEBUG = 1;
-    private static final int ERROR = 2;
+    private static final int WARN = 2;
+    private static final int ERROR = 3;
 
-    @IntDef({DEBUG, ERROR})
+    @IntDef({DEBUG, WARN, ERROR})
     @Retention(RetentionPolicy.SOURCE)
     private @interface LogPriority {
     }
 
 
-    private static final int MSG_MAX_LENGTH = 900;
+    private static final int MSG_MAX_LENGTH = 3072;
 
 
     /**
@@ -48,6 +49,9 @@ public class Logger {
     public static void setLogEnabled(boolean logEnabled) {
         Logger.logEnabled = logEnabled;
     }
+
+
+    //====================================================
 
     /**
      * 默认 tag "----------"
@@ -85,6 +89,55 @@ public class Logger {
         printLog(tag, msg, tr, DEBUG);
     }
 
+    //====================================================
+    /**
+     * 默认 tag "----------"
+     *
+     * @param msg msg
+     */
+    public static void w(String msg) {
+        w(DEFAULT_TAG, msg);
+    }
+
+    /**
+     * @param tag tag
+     * @param msg msg
+     */
+    public static void w(String tag, String... msg) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : msg) {
+            stringBuilder.append(s);
+        }
+
+        w(tag, stringBuilder.toString());
+    }
+
+    /**
+     * @param tag tag
+     * @param msg msg
+     */
+    public static void w(String tag, String msg) {
+        w(tag, msg, null);
+    }
+
+    public static void w(Throwable tr) {
+        w("", tr);
+    }
+
+
+    public static void w(String msg, Throwable tr) {
+        w(DEFAULT_TAG, msg, tr);
+    }
+
+
+    public static void w(String tag, String msg, Throwable tr) {
+        printLog(tag, msg, tr, WARN);
+    }
+
+
+     //====================================================
+
 
     public static void e(String msg) {
         e(DEFAULT_TAG, msg);
@@ -101,7 +154,7 @@ public class Logger {
             stringBuilder.append(s);
         }
 
-        d(tag, stringBuilder.toString());
+        e(tag, stringBuilder.toString());
     }
 
 
@@ -137,16 +190,20 @@ public class Logger {
             return;
         }
         if (logPriority == DEBUG) {
-            Log.d(tag, "__________________________________");
-        } else {
-            Log.e(tag, "__________________________________");
+            Log.d(tag, "________________LOG START__________________");
+        } else if (logPriority == WARN) {
+            Log.w(tag, "________________LOG START__________________");
+        } else if (logPriority == ERROR) {
+            Log.e(tag, "________________LOG START__________________");
         }
         printLogLocation(tag);
 
         for (String str : splitLargeMsg(msg)) {
             if (logPriority == DEBUG) {
                 Log.d(tag, str);
-            } else {
+            } else if (logPriority == WARN) {
+                Log.w(tag, str);
+            } else if (logPriority == ERROR) {
                 Log.e(tag, str);
             }
         }
@@ -154,15 +211,19 @@ public class Logger {
         if (tr != null) {
             if (logPriority == DEBUG) {
                 Log.d(tag, "", tr);
-            } else {
+            } else if (logPriority == WARN) {
+                Log.w(tag, "", tr);
+            } else if (logPriority == ERROR) {
                 Log.e(tag, "", tr);
             }
         }
 
         if (logPriority == DEBUG) {
-            Log.d(tag, "====================================");
-        } else {
-            Log.e(tag, "====================================");
+            Log.d(tag, "================LOG END====================");
+        } else if (logPriority == WARN) {
+            Log.w(tag, "================LOG END====================");
+        } else if (logPriority == ERROR) {
+            Log.e(tag, "================LOG END====================");
         }
     }
 

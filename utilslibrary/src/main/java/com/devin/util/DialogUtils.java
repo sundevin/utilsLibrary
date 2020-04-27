@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * <p>Description:
  * <p>Company：
- * <p>Email:bjxm2013@163.com
+ * <p>Email:
  * <p>Created by Devin Sun on 2017/10/1.
  */
 
@@ -21,6 +21,7 @@ public class DialogUtils {
 
     }
 
+
     public static AlertDialog createSingleChoiceDialog(Activity activity, String title, String[] items, int which, DialogInterface.OnClickListener onClickListener) {
         return new AlertDialog.Builder(activity)
                 .setTitle(title)
@@ -28,16 +29,30 @@ public class DialogUtils {
                 .create();
     }
 
+    public static AlertDialog createItemsDialog(Activity activity,  String[] items,  DialogInterface.OnClickListener onClickListener) {
+        return new AlertDialog.Builder(activity)
+                .setItems(items, onClickListener)
+                .create();
+    }
+
+    public static AlertDialog createItemsDialog(Activity activity, String title, String[] items,  DialogInterface.OnClickListener onClickListener) {
+        return new AlertDialog.Builder(activity)
+                .setTitle(title)
+                .setItems(items, onClickListener)
+                .create();
+    }
+
     public static AlertDialog.Builder createBuilder(Activity activity) {
         return new AlertDialog.Builder(activity);
     }
+
 
     public static AlertDialog createDialog(Activity activity) {
         return createBuilder(activity).create();
     }
 
     public static AlertDialog createDialog(Activity activity, View view) {
-        return createDialog(activity, false, view);
+        return createDialog(activity, true, view);
     }
 
     public static AlertDialog createDialog(Activity activity, boolean cancelable, View view) {
@@ -51,6 +66,7 @@ public class DialogUtils {
                                            String positiveText, DialogInterface.OnClickListener onPositiveClickListener) {
         return createBuilder(activity)
                 .setMessage(msg)
+                .setCancelable(false)
                 .setPositiveButton(positiveText, onPositiveClickListener)
                 .create();
     }
@@ -61,6 +77,7 @@ public class DialogUtils {
                                            String negativeText, DialogInterface.OnClickListener onNegativeClickListener) {
         return createBuilder(activity)
                 .setMessage(msg)
+                .setCancelable(false)
                 .setPositiveButton(positiveText, onPositiveClickListener)
                 .setNegativeButton(negativeText, onNegativeClickListener)
                 .create();
