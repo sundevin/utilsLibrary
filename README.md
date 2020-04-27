@@ -19,6 +19,12 @@ A tools library for Android.
 ---
 ### 更新日志
 
+- 2.1.1
+```
+    2020/04/27
+    其他工具类更新
+```
+
 - 2.1.0
 ```
     2019/07/25
@@ -93,8 +99,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.8'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 ```
-####  其他
-library 里有本人写的，也有他人提供后由本人整理的，有些方法可能没有经过验证，可能会出现 bug，如果出现 bug，请及时提 issue，我会及时处理。
-如果有比较好的工具类也可以共享出来，我会及时添加进去。
 
 
