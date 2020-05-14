@@ -163,7 +163,7 @@ public class FileUtils {
      *
      * @param filePath 文件路径
      */
-    private static void deleteFile(String filePath) {
+    public static void deleteFile(String filePath) {
 
         if (!FileUtils.fileIsExists(filePath)) {
             return;
