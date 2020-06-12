@@ -52,7 +52,7 @@ public class DialogUtils {
     }
 
     public static AlertDialog createDialog(Activity activity, View view) {
-        return createDialog(activity, true, view);
+        return createDialog(activity, false, view);
     }
 
     public static AlertDialog createDialog(Activity activity, boolean cancelable, View view) {

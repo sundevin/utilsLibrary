@@ -19,7 +19,7 @@ public class DateUtils {
      * @return 返回 yy/MM/dd HH:mm
      */
     public static String getYMDHM_1(long millisecond) {
-        return getFormatDate("yy/MM/dd HH:mm", millisecond);
+        return getFormatDate("yyyy/MM/dd HH:mm", millisecond);
     }
 
     /**
@@ -27,7 +27,7 @@ public class DateUtils {
      * @return 返回 yy-MM-dd HH:mm
      */
     public static String getYMDHM_2(long millisecond) {
-        return getFormatDate("yy-MM-dd HH:mm", millisecond);
+        return getFormatDate("yyyy-MM-dd HH:mm", millisecond);
     }
 
 
@@ -36,7 +36,7 @@ public class DateUtils {
      * @return 返回 yy.MM.dd HH:mm
      */
     public static String getYMDHM_3(long millisecond) {
-        return getFormatDate("yy.MM.dd HH:mm", millisecond);
+        return getFormatDate("yyyy.MM.dd HH:mm", millisecond);
     }
 
 
@@ -46,7 +46,7 @@ public class DateUtils {
      * @return 返回 yy-MM-dd
      */
     public static String getYMD(long millisecond) {
-        return getFormatDate("yy-MM-dd", millisecond);
+        return getFormatDate("yyyy-MM-dd", millisecond);
     }
 
     /**
