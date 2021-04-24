@@ -26,6 +26,21 @@ public class FileUtils {
         return Environment.getRootDirectory().getAbsolutePath();
     }
 
+    /**
+     * 获取跟目录下的 Download 目录
+     * @return
+     */
+    public static String getDownloadPath() {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+    }
+
+    /**
+     * 获取跟目录下的 DCIM 目录
+     * @return
+     */
+    public static String getDCIMPath() {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
+    }
 
     /**
      * 查询设备是否有不可被移除的sd卡
