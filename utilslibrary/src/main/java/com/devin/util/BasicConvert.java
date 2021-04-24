@@ -3,6 +3,7 @@ package com.devin.util;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * <p>Description: java的基本类型转换工具类,主要是加了 try catch ，防止crash.
@@ -58,6 +59,19 @@ public class BasicConvert {
             e.printStackTrace();
             return 0L;
         }
+    }
+
+    /**
+     * 格式化字符串
+     */
+    public static String format2FString(double cost) {
+        String result = "";
+        try {
+            result = String.format(Locale.getDefault(),"%.2f", cost);
+        } catch (Exception e) {
+            result = cost + "";
+        }
+        return result;
     }
 
 
