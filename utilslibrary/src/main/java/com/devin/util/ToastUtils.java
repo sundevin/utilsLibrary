@@ -14,9 +14,6 @@ import com.devin.UtilManager;
  */
 public class ToastUtils {
 
-    private static Toast toast;
-
-
     /**
      * Make a standard toast that just contains a text view with the text from a resource.
      * @param resId The resource id of the string resource to use.  Can be formatted tex
@@ -31,12 +28,14 @@ public class ToastUtils {
      * @param text Toast str
      */
     public static void showCenter(String text) {
-        if (toast == null) {
-            toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
+        try {
+            Toast toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setText(text);
+            toast.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        toast.setText(text);
-        toast.show();
     }
 
 
@@ -55,11 +54,13 @@ public class ToastUtils {
      * @param text Toast str
      */
     public static void show(String text) {
-        if (toast == null) {
-            toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
+        try {
+            Toast toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
+            toast.setText(text);
+            toast.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        toast.setText(text);
-        toast.show();
     }
 
 }
