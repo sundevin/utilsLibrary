@@ -17,6 +17,21 @@ import static android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
 
 public class SystemIntent {
 
+
+    /**
+     * 跳转到桌面
+     */
+    public static void startHomeActivity() {
+        try {
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory(Intent.CATEGORY_HOME);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            UtilManager.getContext().startActivity(homeIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 打开网络设置界面
      */
