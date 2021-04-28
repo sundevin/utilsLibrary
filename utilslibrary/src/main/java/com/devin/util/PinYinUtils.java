@@ -34,21 +34,21 @@ public class PinYinUtils {
         Matcher matcher = p.matcher(inputString.substring(0, 1));
         if (matcher.find()) {
             char[] input = inputString.trim().toCharArray();
-            String output = "";
+            StringBuilder output = new StringBuilder();
             try {
                 for (int i = 0; i < input.length; i++) {
                     if (java.lang.Character.toString(input[i]).matches(
                             "[\\u4E00-\\u9FA5]+")) {
                         String[] temp = PinyinHelper.toHanyuPinyinStringArray(
                                 input[i], format);
-                        output += temp[0];
+                        output.append(temp[0]);
                     } else
-                        output += java.lang.Character.toString(input[i]);
+                        output.append(input[i]);
                 }
             } catch (BadHanyuPinyinOutputFormatCombination e) {
                 e.printStackTrace();
             }
-            return output;
+            return output.toString();
         } else {
             return "";
         }
