@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class GsonUtils {
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     /**
      * 通过Gson获取Object

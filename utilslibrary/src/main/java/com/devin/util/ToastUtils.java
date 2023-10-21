@@ -1,8 +1,9 @@
 package com.devin.util;
 
-import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import androidx.annotation.StringRes;
 
 import com.devin.UtilManager;
 
@@ -29,9 +30,8 @@ public class ToastUtils {
      */
     public static void showCenter(String text) {
         try {
-            Toast toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(UtilManager.getContext(), text, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.setText(text);
             toast.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,9 +55,7 @@ public class ToastUtils {
      */
     public static void show(String text) {
         try {
-            Toast toast = Toast.makeText(UtilManager.getContext(), "", Toast.LENGTH_SHORT);
-            toast.setText(text);
-            toast.show();
+             Toast.makeText(UtilManager.getContext(), text, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }

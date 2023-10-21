@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
@@ -180,6 +181,25 @@ public class AppInfo {
      */
     public static boolean isMainProcess() {
         return UtilManager.getContext().getPackageName().equals(getCurrentProcessName());
+    }
+
+    /**
+     * 获取app签名
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public String getPackageSignature(Context context, String packageName) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+            Signature[] signatures = packageInfo.signatures;
+            if (signatures.length > 0) {
+                return signatures[0].toCharsString();
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

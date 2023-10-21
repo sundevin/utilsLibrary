@@ -15,14 +15,14 @@ import com.devin.UtilManager;
  * <p>Email:bjxm2013@163.com
  * <p>Created by Devin Sun on 2017/4/26.
  */
-public class SoftKeyBoardUtils {
+public class SoftKeyboardUtils {
 
     /**
      * 打开软键盘
      *
      * @param view 为接受软键盘输入的视图
      */
-    public static void openKeybord(View view) {
+    public static void openKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) UtilManager.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
@@ -35,7 +35,7 @@ public class SoftKeyBoardUtils {
      *
      * @param activity activity
      */
-    public static void closeKeyBord(Activity activity) {
+    public static void closeKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) UtilManager.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -52,7 +52,7 @@ public class SoftKeyBoardUtils {
      * @param activity                     activity
      * @param onSoftKeyBoardChangeListener onSoftKeyBoardChangeListener
      */
-    public static void setSoftKeyBoardeListener(Activity activity, final OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
+    public static void setSoftKeyboardListener(Activity activity, final OnSoftKeyboardChangeListener onSoftKeyBoardChangeListener) {
 
         //获取activity的根视图
         final View rootView = activity.getWindow().getDecorView();
@@ -82,7 +82,7 @@ public class SoftKeyBoardUtils {
                 //根视图显示高度变小超过200，可以看作软键盘显示了
                 if (rootViewVisibleHeight - visibleHeight > 200) {
                     if (onSoftKeyBoardChangeListener != null) {
-                        onSoftKeyBoardChangeListener.keyBoardShow(rootViewVisibleHeight - visibleHeight);
+                        onSoftKeyBoardChangeListener.keyboardShow(rootViewVisibleHeight - visibleHeight);
                     }
                     rootViewVisibleHeight = visibleHeight;
                     return;
@@ -91,7 +91,7 @@ public class SoftKeyBoardUtils {
                 //根视图显示高度变大超过200，可以看作软键盘隐藏了
                 if (visibleHeight - rootViewVisibleHeight > 200) {
                     if (onSoftKeyBoardChangeListener != null) {
-                        onSoftKeyBoardChangeListener.keyBoardHide(visibleHeight - rootViewVisibleHeight);
+                        onSoftKeyBoardChangeListener.keyboardHide(visibleHeight - rootViewVisibleHeight);
                     }
                     rootViewVisibleHeight = visibleHeight;
                 }
@@ -100,10 +100,10 @@ public class SoftKeyBoardUtils {
 
     }
 
-    public interface OnSoftKeyBoardChangeListener {
-        void keyBoardShow(int height);
+    public interface OnSoftKeyboardChangeListener {
+        void keyboardShow(int height);
 
-        void keyBoardHide(int height);
+        void keyboardHide(int height);
     }
 
 }

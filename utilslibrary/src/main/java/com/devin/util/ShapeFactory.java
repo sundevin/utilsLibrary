@@ -2,7 +2,8 @@ package com.devin.util;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 /**
  * <p>Description: 创建 Shape

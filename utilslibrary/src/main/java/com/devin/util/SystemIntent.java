@@ -106,11 +106,11 @@ public class SystemIntent {
 
 
     /**
-     * 自动拨打电话
-     *
+     * 发送短信
      * @param phone 手机号码
+     * @param message 短信内容
      */
-    public static void startCallPhone(String phone, String message) {
+    public static void startSendMessage(String phone, String message) {
         try {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

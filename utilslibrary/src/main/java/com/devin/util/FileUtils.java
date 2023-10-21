@@ -109,6 +109,25 @@ public class FileUtils {
         return path;
     }
 
+    public static String getExternalPicturesDir() {
+        String path = null;
+        File file = UtilManager.getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (file != null && file.exists()) {
+            path = file.getAbsolutePath();
+        }
+        return path;
+    }
+
+    public static String getExternalDownloadsDir() {
+        String path = null;
+        File file = UtilManager.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (file != null && file.exists()) {
+            path = file.getAbsolutePath();
+        }
+        return path;
+    }
+
+
     /**
      * 返回一个内置存储 data/data/包名/files/目录
      *

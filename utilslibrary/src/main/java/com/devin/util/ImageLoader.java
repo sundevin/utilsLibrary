@@ -2,9 +2,10 @@ package com.devin.util;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -30,15 +31,9 @@ public class ImageLoader {
      */
     public static void loadDrawableRes(Context context, @DrawableRes int resId, ImageView imageView) {
 
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(R.drawable.shape_default_range_bg)
-                        .error(R.drawable.shape_default_range_bg);
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.shape_default_range_bg).error(R.drawable.shape_default_range_bg);
 
-        Glide.with(context)
-                .load(resId)
-                .apply(requestOptions)
-                .into(imageView);
+        Glide.with(context).load(resId).apply(requestOptions).into(imageView);
     }
 
 
@@ -53,15 +48,9 @@ public class ImageLoader {
      */
     public static void loadUri(Context context, Uri uri, ImageView imageView) {
 
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(R.drawable.shape_default_range_bg)
-                        .error(R.drawable.shape_default_range_bg);
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.shape_default_range_bg).error(R.drawable.shape_default_range_bg);
 
-        Glide.with(context)
-                .load(uri)
-                .apply(requestOptions)
-                .into(imageView);
+        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -73,15 +62,9 @@ public class ImageLoader {
      */
     public static void loadUri(Context context, Uri uri, @DrawableRes int placeholder, ImageView imageView) {
 
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(placeholder)
-                        .error(placeholder);
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder);
 
-        Glide.with(context)
-                .load(uri)
-                .apply(requestOptions)
-                .into(imageView);
+        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
     }
 
 
@@ -117,14 +100,8 @@ public class ImageLoader {
      * @param imageView
      */
     public static void load(Context context, String imgUrl, @DrawableRes int placeholder, ImageView imageView) {
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(placeholder)
-                        .error(placeholder);
-        Glide.with(context)
-                .load(imgUrl)
-                .apply(requestOptions)
-                .into(imageView);
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder);
+        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
     }
 
     //======================================================================
@@ -164,16 +141,9 @@ public class ImageLoader {
      * @param radiusDp
      */
     public static void loadRound(Context context, String imgUrl, @DrawableRes int placeholder, ImageView imageView, int radiusDp) {
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(placeholder)
-                        .error(placeholder)
-                        .transform(new GlideRoundTransform(radiusDp));
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideRoundTransform(radiusDp));
 
-        Glide.with(context)
-                .load(imgUrl)
-                .apply(requestOptions)
-                .into(imageView);
+        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
 
     }
     //======================================================================
@@ -209,20 +179,12 @@ public class ImageLoader {
      */
     public static void loadCircle(Context context, String imgUrl, @DrawableRes int placeholder, ImageView imageView) {
 
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(placeholder)
-                        .error(placeholder)
-                        .transform(new GlideCircleTransform());
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideCircleTransform());
 
-        Glide.with(context)
-                .load(imgUrl)
-                .apply(requestOptions)
-                .into(imageView);
+        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
     }
 
     //======================================================================
-
 
 
     /**
@@ -247,7 +209,7 @@ public class ImageLoader {
      * @param imageView
      */
     public static void loadBorderCircle(Context context, String imgUrl, int borderDp, @ColorInt int color, ImageView imageView) {
-        loadBorderCircle(context,imgUrl,R.drawable.shape_default_circle_bg,borderDp,color,imageView);
+        loadBorderCircle(context, imgUrl, R.drawable.shape_default_circle_bg, borderDp, color, imageView);
     }
 
     /**
@@ -259,17 +221,10 @@ public class ImageLoader {
      * @param color
      * @param imageView
      */
-    public static void loadBorderCircle(Context context, String imgUrl,@DrawableRes int placeholder, int borderDp, @ColorInt int color, ImageView imageView) {
+    public static void loadBorderCircle(Context context, String imgUrl, @DrawableRes int placeholder, int borderDp, @ColorInt int color, ImageView imageView) {
 
-        RequestOptions requestOptions =
-                new RequestOptions()
-                        .placeholder(placeholder)
-                        .error(placeholder)
-                        .transform(new GlideCircleTransform( borderDp, color));
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideCircleTransform(borderDp, color));
 
-        Glide.with(context)
-                .load(imgUrl)
-                .apply(requestOptions)
-                .into(imageView);
+        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
     }
 }

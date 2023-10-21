@@ -24,8 +24,7 @@ public class ShareUtils {
         sendIntent.setType("text/plain");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
-        boolean b = context instanceof Activity;
-        if (!b) {
+        if (!(context instanceof Activity)) {
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(shareIntent);
@@ -54,8 +53,7 @@ public class ShareUtils {
         sendIntent.setType("image/jpeg");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
-        boolean b = context instanceof Activity;
-        if (!b) {
+        if (!(context instanceof Activity)) {
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(shareIntent);
@@ -88,8 +86,7 @@ public class ShareUtils {
         sendIntent.setType("image/*");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
-        boolean b = context instanceof Activity;
-        if (!b) {
+        if (!(context instanceof Activity)) {
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(shareIntent);

@@ -1,6 +1,7 @@
 package com.devin.util;
 
-import android.support.annotation.StringRes;
+
+import androidx.annotation.StringRes;
 
 import com.devin.UtilManager;
 

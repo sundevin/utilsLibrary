@@ -20,7 +20,7 @@ public class SpeakerUtils {
     public static void switchSpeaker(Context context, boolean enableSpeaker) {
         try {
             AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            audioManager.setMode(AudioManager.ROUTE_SPEAKER);
+            audioManager.setMode(AudioManager.MODE_IN_CALL);
             int currVolume = audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
             if (enableSpeaker) {
                 //setSpeakerphoneOn() only work when audio mode set to MODE_IN_CALL.
