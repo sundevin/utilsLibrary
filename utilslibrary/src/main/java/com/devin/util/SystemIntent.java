@@ -2,11 +2,16 @@ package com.devin.util;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 
 import com.devin.UtilManager;
 
 import static android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
+
+import androidx.core.content.FileProvider;
+
+import java.io.File;
 
 /**
  * <p>Description: 关于一些系统设置跳转的工具类
@@ -185,6 +190,25 @@ public class SystemIntent {
             UtilManager.getContext().startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void installApp(String aplFile) {
+        File file = new File(aplFile);
+        if (file.exists()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                String authorities = UtilManager.getContext().getPackageName() + ".FileProvider";
+                uri = FileProvider.getUriForFile(UtilManager.getContext(), authorities, file);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                uri = Uri.fromFile(file);
+            }
+
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            UtilManager.getContext().startActivity(intent);
         }
     }
 
