@@ -1,5 +1,6 @@
 package com.devin.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,7 +68,6 @@ public class DateUtils {
     }
 
 
-
     /**
      * 格式化后的日期时间
      *
@@ -78,6 +78,22 @@ public class DateUtils {
     public static String getFormatDate(String pattern, long millisecond) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         return dateFormat.format(new Date(millisecond));
+    }
+
+
+    public static long getMillisecond(String pattern, String time) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+
+        Date parse = null;
+        try {
+            parse = dateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (parse != null)
+            return parse.getTime();
+        else
+            return 0;
     }
 
 
@@ -151,13 +167,12 @@ public class DateUtils {
     }
 
 
-
-
     public static final String[] WEEK_1 = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
     public static final String[] WEEK_2 = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 
     /**
      * 日期获取星期
+     *
      * @param date
      * @return 0~6
      */
@@ -170,8 +185,6 @@ public class DateUtils {
         }
         return w;
     }
-
-
 
 
 }
