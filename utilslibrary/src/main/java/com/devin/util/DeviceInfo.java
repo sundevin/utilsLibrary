@@ -473,4 +473,39 @@ public class DeviceInfo {
         return UtilManager.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
     }
 
+
+    /**
+     * 获取是否root
+     *
+     * @return
+     */
+    public static boolean isDeviceRooted() {
+        boolean bool = false;
+        try {
+            //检查系统目录：在Android设备上，已root的设备会具有特定的系统目录，
+            // 如/system/bin/su或/system/xbin/su
+            File suFile = new File("/system/bin/su");
+            File suFileX = new File("/system/xbin/su");
+            bool = suFile.exists() || suFileX.exists();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!bool) {
+            try {
+                //另一种方法是执行一个Shell命令来检查设备是否已root。
+                // 可以使用Runtime.getRuntime().exec()方法来执行Shell命令
+                Process process = Runtime.getRuntime().exec("su");
+                int exitValue = process.waitFor();
+                bool = exitValue == 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return bool;
+    }
+
+
+
 }
