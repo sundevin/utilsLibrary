@@ -21,6 +21,16 @@ import com.devin.glide.GlideRoundTransform;
  */
 public class ImageLoader {
 
+    /**
+     * 加载资源图
+     *
+     * @param resId
+     * @param imageView
+     */
+    public static void loadDrawableRes(@DrawableRes int resId, ImageView imageView) {
+        loadDrawableRes(UtilManager.getContext(), resId, imageView);
+    }
+
 
     /**
      * 加载资源图
@@ -30,14 +40,35 @@ public class ImageLoader {
      * @param imageView
      */
     public static void loadDrawableRes(Context context, @DrawableRes int resId, ImageView imageView) {
+        loadDrawableRes(context, resId, R.drawable.shape_default_range_bg, imageView);
+    }
 
-        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.shape_default_range_bg).error(R.drawable.shape_default_range_bg);
 
-        Glide.with(context).load(resId).apply(requestOptions).into(imageView);
+    /**
+     * 加载资源图
+     *
+     * @param context
+     * @param resId
+     * @param imageView
+     */
+    public static void loadDrawableRes(Context context, @DrawableRes int resId, @DrawableRes int placeholder, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder);
+        loadModel(context, resId, requestOptions, imageView);
     }
 
 
     //======================================================================
+
+
+    /**
+     * 加载URI
+     *
+     * @param uri
+     * @param imageView
+     */
+    public static void loadUri(Uri uri, ImageView imageView) {
+        loadUri(UtilManager.getContext(), uri, imageView);
+    }
 
     /**
      * 加载URI
@@ -47,10 +78,7 @@ public class ImageLoader {
      * @param imageView
      */
     public static void loadUri(Context context, Uri uri, ImageView imageView) {
-
-        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.shape_default_range_bg).error(R.drawable.shape_default_range_bg);
-
-        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
+        loadUri(context, uri, R.drawable.shape_default_range_bg, imageView);
     }
 
     /**
@@ -61,10 +89,8 @@ public class ImageLoader {
      * @param imageView
      */
     public static void loadUri(Context context, Uri uri, @DrawableRes int placeholder, ImageView imageView) {
-
         RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder);
-
-        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
+        loadModel(context, uri, requestOptions, imageView);
     }
 
 
@@ -101,7 +127,12 @@ public class ImageLoader {
      */
     public static void load(Context context, String imgUrl, @DrawableRes int placeholder, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder);
-        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
+        loadModel(context, imgUrl, requestOptions, imageView);
+    }
+
+    public static void load(Context context, Object model,@DrawableRes int placeholder, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder);
+        loadModel(context, model, requestOptions, imageView);
     }
 
     //======================================================================
@@ -142,10 +173,15 @@ public class ImageLoader {
      */
     public static void loadRound(Context context, String imgUrl, @DrawableRes int placeholder, ImageView imageView, int radiusDp) {
         RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideRoundTransform(radiusDp));
-
-        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
-
+        loadModel(context, imgUrl, requestOptions, imageView);
     }
+
+
+    public static void loadRound(Context context, Object model,@DrawableRes int placeholder, ImageView imageView, int radiusDp) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideRoundTransform(radiusDp));
+        loadModel(context, model, requestOptions, imageView);
+    }
+
     //======================================================================
 
     /**
@@ -178,10 +214,13 @@ public class ImageLoader {
      * @param imageView
      */
     public static void loadCircle(Context context, String imgUrl, @DrawableRes int placeholder, ImageView imageView) {
-
         RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideCircleTransform());
+        loadModel(context, imgUrl, requestOptions, imageView);
+    }
 
-        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
+    public static void loadCircle(Context context, Object model, @DrawableRes int placeholder, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideCircleTransform());
+        loadModel(context, model, requestOptions, imageView);
     }
 
     //======================================================================
@@ -222,9 +261,37 @@ public class ImageLoader {
      * @param imageView
      */
     public static void loadBorderCircle(Context context, String imgUrl, @DrawableRes int placeholder, int borderDp, @ColorInt int color, ImageView imageView) {
-
         RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideCircleTransform(borderDp, color));
-
-        Glide.with(context).load(imgUrl).apply(requestOptions).into(imageView);
+        loadModel(context,imgUrl,requestOptions,imageView);
     }
+
+    /**
+     * 加载带描边的圆图
+     *
+     * @param context
+     * @param model
+     * @param borderDp
+     * @param color
+     * @param imageView
+     */
+    public static void loadBorderCircle(Context context, Object model, @DrawableRes int placeholder, int borderDp, @ColorInt int color, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(placeholder).error(placeholder).transform(new GlideCircleTransform(borderDp, color));
+        loadModel(context,model,requestOptions,imageView);
+    }
+
+
+    //======================================================================
+    public static void loadModel(Object model, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.shape_default_range_bg).error(R.drawable.shape_default_range_bg);
+        loadModel(UtilManager.getContext(), model, requestOptions, imageView);
+    }
+
+    public static void loadModel(Context context, Object model, RequestOptions options, ImageView imageView) {
+        if (options != null) {
+            Glide.with(context).load(model).apply(options).into(imageView);
+        } else {
+            Glide.with(context).load(model).into(imageView);
+        }
+    }
+
 }
