@@ -39,14 +39,14 @@ public class GsonUtils {
     /**
      * 通过Gson获取class集合
      *
-     * @param json    json字符串
+     * @param jsonArray    json字符串
      * @param typeOfT 例如 new TypeToken<List<T>>() {}.getType()
      * @return 返回一个不为null的list集合，只需要做size是否为0的判断即可
      */
-    public static <T> List<T> getList(String json, Type typeOfT) {
+    public static <T> List<T> getList(String jsonArray, Type typeOfT) {
 
         try {
-            List<T> list = gson.fromJson(json, typeOfT);
+            List<T> list = gson.fromJson(jsonArray, typeOfT);
             if (list != null) {
                 return list;
             }
@@ -57,25 +57,30 @@ public class GsonUtils {
         return new ArrayList<>();
     }
 
+
+    public static <T> List<T> getList(String jsonArray, Class<T> clazz) {
+        Type listType = TypeToken.getParameterized(List.class, clazz).getType();
+        return getList(jsonArray,listType);
+    }
+
     /**
      * 通过Gson获取String 集合
      *
-     * @param json json字符串
+     * @param jsonArray json字符串
      * @return 返回一个不为null的StrList集合，只需要做size是否为0的判断即可
      */
-    public static List<String> getStrList(String json) {
-        return getList(json, new TypeToken<List<String>>() {
-        }.getType());
+    public static List<String> getStrList(String jsonArray) {
+        return getList(jsonArray, String.class);
     }
 
     /**
      * 通过Gson获取map的list集合
      *
-     * @param json json字符串
+     * @param jsonArray json字符串
      * @return 返回一个不为null的list集合，只需要做size是否为0的判断即可
      */
-    public static List<Map<String, Object>> listKeyMap(String json) {
-        return getList(json, new TypeToken<List<Map<String, Object>>>() {
+    public static List<Map<String, Object>> listKeyMap(String jsonArray) {
+        return getList(jsonArray, new TypeToken<List<Map<String, Object>>>() {
         }.getType());
     }
 
