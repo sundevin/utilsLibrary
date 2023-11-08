@@ -42,7 +42,7 @@ public class BitmapUtils {
      */
     public static String bitmap2Str(Bitmap bitmap) {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, arrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arrayOutputStream);
         byte[] b = arrayOutputStream.toByteArray();
         return Base64.encodeToString(b, Base64.DEFAULT);
     }
