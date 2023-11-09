@@ -1,5 +1,6 @@
 package com.devin.util;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -35,12 +38,45 @@ import java.io.FileOutputStream;
 public class BitmapUtils {
 
     /**
+     * Bitmap转换为Drawable
+     *
+     * @param context
+     * @param bitmap
+     * @return
+     */
+    public static Drawable bitmapToDrawable(Context context, Bitmap bitmap) {
+        return new BitmapDrawable(context.getResources(), bitmap);
+    }
+
+    /**
+     * Drawable转换为Bitmap：
+     *
+     * @param drawable
+     * @return
+     */
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+
+    /**
      * 把bitmap转换成String
      *
      * @param bitmap 需要转换的图片
      * @return 转换后的base64转码的字符串
      */
-    public static String bitmap2Str(Bitmap bitmap) {
+    public static String bitmapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arrayOutputStream);
         byte[] b = arrayOutputStream.toByteArray();
@@ -53,7 +89,7 @@ public class BitmapUtils {
      * @param str 需要转换的字符串
      * @return 失败时为null
      */
-    public static Bitmap str2Bitmap(String str) {
+    public static Bitmap base64ToBitmap(String str) {
         Bitmap bitmap = null;
         try {
             byte[] bitmapArray = Base64.decode(str, Base64.DEFAULT);
