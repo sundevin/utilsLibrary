@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <p>Description: 关于Gson解析的一些工具类  需要依赖Gson 如:'com.google.code.gson:gson:2.7'
@@ -26,7 +26,7 @@ public class GsonUtils {
      * @param cls
      * @return 可能为null的Object
      */
-    public static <T> T getObject(String json, Class<T> cls) {
+    public static <T> T parseObject(String json, Class<T> cls) {
         T t = null;
         try {
             t = gson.fromJson(json, cls);
@@ -43,7 +43,7 @@ public class GsonUtils {
      * @param typeOfT 例如 new TypeToken<List<T>>() {}.getType()
      * @return 返回一个不为null的list集合，只需要做size是否为0的判断即可
      */
-    public static <T> List<T> getList(String jsonArray, Type typeOfT) {
+    public static <T> List<T> parseList(String jsonArray, Type typeOfT) {
 
         try {
             List<T> list = gson.fromJson(jsonArray, typeOfT);
@@ -58,9 +58,9 @@ public class GsonUtils {
     }
 
 
-    public static <T> List<T> getList(String jsonArray, Class<T> clazz) {
+    public static <T> List<T> parseList(String jsonArray, Class<T> clazz) {
         Type listType = TypeToken.getParameterized(List.class, clazz).getType();
-        return getList(jsonArray,listType);
+        return parseList(jsonArray,listType);
     }
 
     /**
@@ -69,8 +69,8 @@ public class GsonUtils {
      * @param jsonArray json字符串
      * @return 返回一个不为null的StrList集合，只需要做size是否为0的判断即可
      */
-    public static List<String> getStrList(String jsonArray) {
-        return getList(jsonArray, String.class);
+    public static List<String> parseStrList(String jsonArray) {
+        return parseList(jsonArray, String.class);
     }
 
     /**
@@ -79,8 +79,8 @@ public class GsonUtils {
      * @param jsonArray json字符串
      * @return 返回一个不为null的list集合，只需要做size是否为0的判断即可
      */
-    public static List<Map<String, Object>> listKeyMap(String jsonArray) {
-        return getList(jsonArray, new TypeToken<List<Map<String, Object>>>() {
+    public static List<HashMap<String, Object>> parseHashMapList(String jsonArray) {
+        return parseList(jsonArray, new TypeToken<List<HashMap<String, Object>>>() {
         }.getType());
     }
 
@@ -91,10 +91,10 @@ public class GsonUtils {
      * @param json json字符串
      * @return 返回一个不为null的map集合
      */
-    public static Map<String, Object> getMap(String json) {
+    public static HashMap<String, Object> parseHashMap(String json) {
 
         try {
-            Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
+            HashMap<String, Object> map = gson.fromJson(json, new TypeToken<HashMap<String, Object>>() {}.getType());
             if (map != null) {
                 return map;
             }
@@ -104,6 +104,25 @@ public class GsonUtils {
         return new HashMap<>();
     }
 
+    /**
+     * 通过Gson获取map集合
+     *
+     * @param json json字符串
+     * @return 返回一个不为null的map集合
+     */
+    public static TreeMap<String, Object> parseTreeMap(String json) {
+
+        try {
+            TreeMap<String, Object> map = gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {}.getType());
+            if (map != null) {
+                return map;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new TreeMap<>();
+    }
+
 
     /**
      * 序列化生成json
@@ -111,7 +130,7 @@ public class GsonUtils {
      * @param object 可以是 class ，list. map等
      * @return 序列化后的json
      */
-    public static String getJsonByObj(Object object) {
+    public static String toJson(Object object) {
         return gson.toJson(object);
     }
 
