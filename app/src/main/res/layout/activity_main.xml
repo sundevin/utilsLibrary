@@ -14,12 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Hello World!"
+        android:contentDescription="文本按钮"
         android:textSize="20sp" />
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="200dp"
+        android:contentDescription="图片按钮"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"

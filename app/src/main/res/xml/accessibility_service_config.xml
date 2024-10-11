@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
+    android:canPerformGestures="true"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/service_desc"
+    android:notificationTimeout="100"
+    android:packageNames="com.tencent.mm"
+    />
+
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--<accessibility-service-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:accessibilityEventTypes="typeWindowContentChanged|typeWindowStateChanged"-->
+<!--android:accessibilityFeedbackType="feedbackGeneric"-->
+<!--android:accessibilityFlags="flagIncludeNotImportantViews|flagReportViewIds"-->
+<!--android:canRetrieveWindowContent="true"-->
+<!--android:canRequestTouchExplorationMode="true"-->
+<!--android:canRequestFilterKeyEvents="true"-->
+<!--android:canPerformGestures="true"-->
+<!--android:packageNames="com.tencent.mm"-->
+<!--android:settingsActivity="com.huangyuanlove.auxiliary.SettingActivity"-->
+<!--android:description="@string/wx_make_call_service_helper"-->
+<!--android:notificationTimeout="100"/>-->
+
