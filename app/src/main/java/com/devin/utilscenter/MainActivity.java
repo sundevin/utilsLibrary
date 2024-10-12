@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!isAccessibilityServiceEnabled(MainActivity.this, MyAccessibilityService.class)) {
                     openAccessibilitySettings(MainActivity.this);
                 } else {
+                    MyAccessibilityService.step=MyAccessibilityService.STEP_START;
                     openWeChat();
                 }
 
