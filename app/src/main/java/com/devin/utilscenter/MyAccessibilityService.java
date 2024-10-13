@@ -1,18 +1,17 @@
 package com.devin.utilscenter;
 
 import android.accessibilityservice.AccessibilityService;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.devin.util.ToastUtils;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class MyAccessibilityService extends AccessibilityService {
-
 
 
     public static final int STEP_START = 0;
@@ -24,163 +23,64 @@ public class MyAccessibilityService extends AccessibilityService {
     private static final int STEP_CLICK_CONTACT = 4;
     private static final int STEP_OPEN_DIALOG = 5;
 
-    public static int step = STEP_START;
+    public static int currentStep = STEP_START;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
-        Log.e("onAccessibilityEvent", "current step:"+step);
+        Log.e("onAccessibilityEvent", "current step:" + currentStep);
 
         int eventType = event.getEventType();
 
         CharSequence packageName = event.getPackageName();
-        if (TextUtils.equals(packageName, "com.tencent.mm") &&
-                (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
-        ) {
-            if (step == STEP_START) {
+        if (TextUtils.equals(packageName, "com.tencent.mm")
+                && (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+                || eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)) {
+            if (currentStep == STEP_START) {
                 boolean b = navigateToContactsTab();
                 if (b) {
-                    step = STEP_SWITCH_CONTACT_TAB;
+                    currentStep = STEP_SWITCH_CONTACT_TAB;
                     sleepWait(1000);
                 }
-            } else if (step == STEP_SWITCH_CONTACT_TAB || step == STEP_SCROLL_LIST) {
-
-                AccessibilityNodeInfo nodeInfo = getNodeByText(getRootInActiveWindow(), "哇哇哇");
-                if (nodeInfo != null) {
-                    for (int i = 0; i < 6; i++) {
-                        if (nodeInfo != null) {
-                            nodeInfo = nodeInfo.getParent();
-                        }
-                    }
-                    if (nodeInfo != null) {
-                        boolean result = nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                        if (result) {
-                            step = STEP_CLICK_CONTACT;
-                            sleepWait(1000);
-                            Log.e("onAccessibilityEvent", "找到了联系人 并进行了点击:");
-                        }
-                    }
+            } else if (currentStep == STEP_SWITCH_CONTACT_TAB) {
+                boolean targetContact = clickTargetContact("Devin");
+                if (targetContact) {
+                    currentStep = STEP_CLICK_CONTACT;
+                    sleepWait(1000);
+                    Log.e("onAccessibilityEvent", "找到了联系人 并进行了点击:");
                 } else {
-                    AccessibilityNodeInfo contactListView = getContactListView();
-                    if (contactListView != null) {
-                        contactListView.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-                        step = STEP_SCROLL_LIST;
-                    } else {
-                        Log.e("onAccessibilityEvent", "未找到listView:");
+                    boolean scrolled = scrollContactList();
+                    if (!scrolled) {
+                        ToastUtils.show("未找到联系人");
+                        // TODO: 2024/10/13  
                     }
-
                 }
-            } else if (step == STEP_CLICK_CONTACT) {
-                AccessibilityNodeInfo nodeInfo = getNodeByText(getRootInActiveWindow(), "音视频通话");
-                if (nodeInfo != null) {
-                    for (int i = 0; i < 2; i++) {
-                        if (nodeInfo != null) {
-                        nodeInfo = nodeInfo.getParent();
-                        }
-                    }
+            } else if (currentStep == STEP_CLICK_CONTACT) {
 
-                    if (nodeInfo != null) {
-
-
-                        CharSequence className = nodeInfo.getClassName();
-                        String viewIdResourceName = nodeInfo.getViewIdResourceName();
-                        boolean isClickable = nodeInfo.isClickable();
-                        boolean visibleToUser = nodeInfo.isVisibleToUser();
-                        boolean isFocusable = nodeInfo.isFocusable();
-                        boolean isFocused = nodeInfo.isFocused();
-                        Log.e("onAccessibilityEvent", "className:" + className
-                                + " viewIdResourceName:" + viewIdResourceName
-                                + " isClickable:" + isClickable
-                                + " visibleToUser:" + visibleToUser
-                                + " isFocusable:" + isFocusable
-                                                   + " isFocused:" + isFocused);
-
-                        AccessibilityNodeInfo finalNodeInfo = nodeInfo;
-                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                            Log.e("onAccessibilityEvent", "222222className:" + className
-                                    + " viewIdResourceName:" + viewIdResourceName
-                                    + " isClickable:" + isClickable
-                                    + " visibleToUser:" + visibleToUser
-                                    + " isFocusable:" + isFocusable
-                                    + " isFocused:" + isFocused);                        boolean result = finalNodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                            if (result) {
-                                Log.e("onAccessibilityEvent", "音视频通话");
-                                step = STEP_OPEN_DIALOG;
-                                sleepWait(1000);
-                            } else {
-                                Log.e("onAccessibilityEvent", "音视频通话 点击失败");
-                            }
-                        }, 500);  // 延时500毫秒
-
-
-
-                    } else {
-                        Log.e("onAccessibilityEvent", "未找到音视频通话按钮");
-                    }
+                boolean openedVideoDialog = openVideoDialog();
+                if (openedVideoDialog) {
+                    Log.e("onAccessibilityEvent", "【音视频通话】按钮点击成功");
+                    currentStep = STEP_OPEN_DIALOG;
+                    sleepWait(500);
                 } else {
-                    Log.e("onAccessibilityEvent", "未找到音视频通话按钮2");
+                    Log.e("onAccessibilityEvent", "尝试点击【音视频通话按钮】失败");
                 }
 
-            }else if (step == STEP_OPEN_DIALOG) {
-                AccessibilityNodeInfo nodeInfo = getNodeByText(getRootInActiveWindow(), "语音通话");
-                if (nodeInfo != null) {
-                    for (int i = 0; i < 3; i++) {
-                        nodeInfo = nodeInfo.getParent();
-                    }
-
-                    if (nodeInfo != null) {
-                        boolean result = nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                        if (result) {
-                            Log.e("onAccessibilityEvent", "语音通话");
-                            step = STEP_OPEN_DIALOG;
-                        }
-                    } else {
-                        Log.e("onAccessibilityEvent", "未找到语音通话按钮");
-                    }
+            } else if (currentStep == STEP_OPEN_DIALOG) {
+                boolean openedVideoDialog = clickDialogMenu(1);
+                if (openedVideoDialog) {
+                    Log.e("onAccessibilityEvent", "弹窗按钮点击成功，流程结束");
+                    currentStep = STEP_OPEN_DIALOG;
+                } else {
+                    Log.e("onAccessibilityEvent", "弹窗按钮点击失败");
                 }
             }
-        }
-
-//        Log.e("MyAccessibilityService", "onAccessibilityEvent:" + event.toString());
-        switch (eventType) {
-            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-                break;
-            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                break;
-            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_CLICKED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_LONG_CLICKED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_SCROLLED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_HOVER_ENTER:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_HOVER_EXIT:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_SELECTED:
-                break;
-            case AccessibilityEvent.TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY:
-                break;
-
         }
     }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-
         Log.e("MyAccessibilityService", "onServiceConnected:");
     }
 
@@ -204,36 +104,87 @@ public class MyAccessibilityService extends AccessibilityService {
      * @return
      */
     private boolean navigateToContactsTab() {
-        AccessibilityNodeInfo rootNode = getRootInActiveWindow();
-        if (rootNode == null) return false;
+        AccessibilityNodeInfo nodeInfo = findTargetNodeByText("通讯录", 2);
+        if (nodeInfo != null && nodeInfo.isClickable()) {
+            return nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        } else {
+            Log.e("onAccessibilityEvent", "未找到通讯录tab");
+        }
+        return false;
+    }
 
-        // 查找 "通讯录" tab 可能包含的文本
-        List<AccessibilityNodeInfo> nodes = rootNode.findAccessibilityNodeInfosByText("通讯录");
+    private boolean clickTargetContact(String name) {
+        AccessibilityNodeInfo nodeInfo = findTargetNodeByText(name, 6);
+        if (nodeInfo != null && nodeInfo.isClickable()) {
+            return nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        } else {
+            Log.e("onAccessibilityEvent", "未找到【" + name + "】节点");
+        }
+        return false;
+    }
 
-        // 遍历找到并点击它
-        for (AccessibilityNodeInfo node : nodes) {
-            node = node.getParent().getParent();
-            if (node != null && node.isClickable()) {
-                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                return true;
-            }
+    private boolean scrollContactList() {
+        AccessibilityNodeInfo contactListView = getContactListView();
+        if (contactListView != null) {
+            return contactListView.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+        } else {
+            Log.e("onAccessibilityEvent", "未找到通讯录列表");
+        }
+
+        return false;
+    }
+
+    private boolean openVideoDialog() {
+        AccessibilityNodeInfo nodeInfo = findTargetNodeByText("音视频通话", 2);
+        if (nodeInfo != null && nodeInfo.isClickable()) {
+            return nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        } else {
+            Log.e("onAccessibilityEvent", "未找到【音视频通话】节点");
+        }
+        return false;
+    }
+
+    private boolean clickDialogMenu(int type) {
+        String text = type == 1 ? "语音通话" : "视频通话";
+        AccessibilityNodeInfo nodeInfo = findTargetNodeByText(text, 3);
+        if (nodeInfo != null && nodeInfo.isClickable()) {
+            return nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        } else {
+            Log.e("onAccessibilityEvent", "未找到【" + text + "】节点");
         }
         return false;
     }
 
 
+    /**
+     * 查找文本对应的可点击的节点
+     *
+     * @param text
+     * @param parentLevel
+     * @return
+     */
+    private AccessibilityNodeInfo findTargetNodeByText(String text, int parentLevel) {
 
-    private AccessibilityNodeInfo getNodeByText(AccessibilityNodeInfo rootNode, String text) {
+        AccessibilityNodeInfo rootInActiveWindow = getRootInActiveWindow();
+        if (rootInActiveWindow == null) {
+            return null;
+        }
 
-        if (rootNode != null) {
-            List<AccessibilityNodeInfo> list = rootNode.findAccessibilityNodeInfosByText(text);
-            if (list.isEmpty()) {
-                return null;
-            } else {
-                return list.get(0);
+        List<AccessibilityNodeInfo> nodeInfoList =rootInActiveWindow.findAccessibilityNodeInfosByText(text);
+
+        AccessibilityNodeInfo targetNode = null;
+        if (!nodeInfoList.isEmpty()) {
+            targetNode = nodeInfoList.get(0);
+        }
+
+        if (targetNode != null) {
+            for (int i = 0; i < parentLevel; i++) {
+                if (targetNode != null) {
+                    targetNode = targetNode.getParent();
+                }
             }
         }
-        return null;
+        return targetNode;
     }
 
 

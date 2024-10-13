@@ -2,7 +2,6 @@ package com.devin.utilscenter;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!isAccessibilityServiceEnabled(MainActivity.this, MyAccessibilityService.class)) {
                     openAccessibilitySettings(MainActivity.this);
                 } else {
-                    MyAccessibilityService.step=MyAccessibilityService.STEP_START;
+                    MyAccessibilityService.currentStep =MyAccessibilityService.STEP_START;
                     openWeChat();
                 }
 
