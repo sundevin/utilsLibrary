@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accessibilityEventTypes="typeWindowContentChanged|typeWindowStateChanged"
+    android:accessibilityEventTypes="typeWindowContentChanged|typeWindowStateChanged|typeNotificationStateChanged|typeWindowsChanged"
     android:accessibilityFeedbackType="feedbackGeneric"
     android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
     android:canRetrieveWindowContent="true"
@@ -10,8 +10,9 @@
     android:canPerformGestures="true"
     android:description="@string/service_desc"
     android:notificationTimeout="100"
-    android:packageNames="com.tencent.mm"
+
     />
+<!--    android:packageNames="com.tencent.mm"-->
 
 <!--    <?xml version="1.0" encoding="utf-8"?>-->
 <!--<accessibility-service-->
