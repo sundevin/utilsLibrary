@@ -13,11 +13,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.devin.util.ImageLoader;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,13 +48,16 @@ public class MainActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isAccessibilityServiceEnabled(MainActivity.this, MyAccessibilityService.class)) {
-                    openAccessibilitySettings(MainActivity.this);
-                } else {
-                    MyAccessibilityService.currentStep =MyAccessibilityService.STEP_START;
-                    openWeChat();
-                }
+//                if (!isAccessibilityServiceEnabled(MainActivity.this, MyAccessibilityService.class)) {
+//                    openAccessibilitySettings(MainActivity.this);
+//                } else {
+//                    MyAccessibilityService.currentStep =MyAccessibilityService.STEP_START;
+//                    openWeChat();
+//                }
 
+               startActivity(new Intent(MainActivity.this, CameraActivity.class));
+
+//                startService(new Intent(MainActivity.this, CameraService.class));
             }
         });
 
@@ -54,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         textView =  findViewById(R.id.textView);
         imageView =  findViewById(R.id.imageView);
     }
+
+
 
 
     public boolean isAccessibilityServiceEnabled(Context context, Class<? extends AccessibilityService> service) {

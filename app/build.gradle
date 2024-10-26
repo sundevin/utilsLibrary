@@ -32,4 +32,16 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation'com.alibaba:fastjson:1.2.83'
     implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+    implementation "androidx.camera:camera-core:1.1.0"
+    implementation "androidx.camera:camera-camera2:1.1.0"
+    implementation "androidx.camera:camera-lifecycle:1.1.0"
+    implementation "androidx.camera:camera-view:1.1.0"
+
+    implementation 'androidx.lifecycle:lifecycle-service:2.8.6'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.8.6'
+    implementation 'androidx.lifecycle:lifecycle-process:2.8.6'
+    implementation 'androidx.startup:startup-runtime:1.2.0'
+
+
 }
