@@ -1,5 +1,6 @@
 package com.devin.utilscenter;
 
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -18,6 +20,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.devin.util.DialogUtils;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
@@ -34,12 +37,34 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        // 申请相机权限
-        if (allPermissionsGranted()) {
-            startCamera(); // 权限通过后启动相机
-        } else {
-            requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
-        }
+
+
+        scanCamera();
+    }
+
+
+    private CameraSelector cameraSelector;
+
+    private void scanCamera() {
+        AlertDialog alertDialog = DialogUtils.createItemsDialog(this, "选择摄像头", new String[]{"前置", "后置"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;
+                } else {
+                    cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+                }
+                dialog.dismiss();
+                // 申请相机权限
+                if (allPermissionsGranted()) {
+                    startCamera(); // 权限通过后启动相机
+                } else {
+                    requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+                }
+            }
+        });
+        alertDialog.setCancelable(false);
+        alertDialog.show();
     }
 
     // 检查所有权限是否已授予
@@ -60,9 +85,10 @@ public class CameraActivity extends AppCompatActivity {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
 
-//                Preview preview = new Preview.Builder().build();
-                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+
+//                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
 //                CameraSelector cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;
+
 
                 imageCapture = new ImageCapture.Builder()
                         .setTargetRotation(getWindowManager().getDefaultDisplay().getRotation())
@@ -70,12 +96,13 @@ public class CameraActivity extends AppCompatActivity {
                         .setJpegQuality(85)
                         .build();
 
-//                PreviewView previewView = findViewById(R.id.viewFinder);
+                PreviewView previewView = findViewById(R.id.viewFinder);
                 // 设置预览输出
-//                preview.setSurfaceProvider(previewView.getSurfaceProvider());
+                Preview preview = new Preview.Builder().build();
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
                 // 绑定生命周期与相机
-                cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageCapture);
+                cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageCapture,preview);
 
                 // 自动抓拍
 //                autoCapturePhoto();

@@ -3,6 +3,7 @@ package com.devin.utilscenter;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
@@ -18,13 +19,12 @@ import androidx.camera.core.ImageCaptureException;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleService;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CameraService extends LifecycleService {
+public class CameraService extends Service {
 
     private ImageCapture imageCapture;
     private ExecutorService cameraExecutor;
@@ -85,7 +85,7 @@ public class CameraService extends LifecycleService {
                         .build();
 
                 // 绑定到生命周期
-                cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture);
+                cameraProvider.bindToLifecycle(null, cameraSelector, imageCapture);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -131,7 +131,9 @@ public class CameraService extends LifecycleService {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return super.onBind(intent);
+        return null;
     }
+
+
 }
 
