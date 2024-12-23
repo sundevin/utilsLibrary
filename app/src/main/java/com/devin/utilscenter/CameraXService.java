@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CameraService extends Service {
+public class CameraXService extends Service {
 
     private ImageCapture imageCapture;
     private ExecutorService cameraExecutor;

@@ -9,30 +9,25 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageProxy;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
 
 import com.devin.util.ImageLoader;
-import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
     private ImageView imageView;
+    private Button btnCameraX;
+    private Button btnCamera1;
+    private Button btnCamera2;
+    private Button btnCamera3;
 
 
     @Override
@@ -41,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         textView.setText("具体请查看Java doc");
-        String url="http://f.hiphotos.baidu.com/image/pic/item/a71ea8d3fd1f4134d244519d2b1f95cad0c85ee5.jpg";
+        String url = "http://f.hiphotos.baidu.com/image/pic/item/a71ea8d3fd1f4134d244519d2b1f95cad0c85ee5.jpg";
 
-        ImageLoader.loadBorderCircle(url,2, Color.WHITE,imageView);
+        ImageLoader.loadBorderCircle(url, 2, Color.WHITE, imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,23 +50,50 @@ public class MainActivity extends AppCompatActivity {
 //                    openWeChat();
 //                }
 
-               startActivity(new Intent(MainActivity.this, CameraActivity.class));
+                startActivity(new Intent(MainActivity.this, CameraXActivity.class));
 
 //                startService(new Intent(MainActivity.this, CameraService.class));
             }
         });
 
-        startActivity(new Intent(MainActivity.this, CameraActivity.class));
-        finish();
+        btnCameraX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CameraXActivity.class));
+            }
+        });
+
+        btnCamera1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Camera1Activity.class));
+            }
+        });
+
+        btnCamera2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Camera2Activity.class));
+            }
+        });
+
+        btnCamera3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Camera3Activity.class));
+            }
+        });
 
     }
 
     private void initView() {
-        textView =  findViewById(R.id.textView);
-        imageView =  findViewById(R.id.imageView);
+        textView = findViewById(R.id.textView);
+        imageView = findViewById(R.id.imageView);
+        btnCameraX = findViewById(R.id.btn_camera_x);
+        btnCamera1 = findViewById(R.id.btn_camera_1);
+        btnCamera2 = findViewById(R.id.btn_camera_2);
+        btnCamera3 = findViewById(R.id.btn_camera_3);
     }
-
-
 
 
     public boolean isAccessibilityServiceEnabled(Context context, Class<? extends AccessibilityService> service) {

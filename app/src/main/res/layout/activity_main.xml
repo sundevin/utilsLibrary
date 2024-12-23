@@ -13,18 +13,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Hello World!"
         android:contentDescription="文本按钮"
-        android:textSize="20sp" />
+        android:text="Hello World!"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="200dp"
-        android:contentDescription="图片按钮"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="#00f" />
+        android:background="#00f"
+        android:contentDescription="图片按钮"
+        android:visibility="gone" />
 
+    <Button
+        android:id="@+id/btn_camera_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CameraX方案" />
+
+    <Button
+        android:id="@+id/btn_camera_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera1方案" />
+
+    <Button
+        android:id="@+id/btn_camera_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera2方案" />
+
+
+    <Button
+        android:id="@+id/btn_camera_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera3方案" />
 </LinearLayout>

@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Camera2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Camera1Activity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -25,8 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraActivity" />
-
+        <activity android:name=".CameraXActivity" />
+        <activity android:name=".Camera3Activity" />
 
         <service
             android:name=".MyAccessibilityService"
@@ -42,11 +48,9 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
         <service
-            android:name=".CameraService"
+            android:name=".CameraXService"
             android:enabled="true"
-            android:exported="true"/>
-
-
+            android:exported="true" />
     </application>
 
 </manifest>

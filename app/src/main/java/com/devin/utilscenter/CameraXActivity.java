@@ -1,7 +1,10 @@
 package com.devin.utilscenter;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Size;
@@ -21,11 +24,12 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.devin.util.DialogUtils;
+import com.devin.util.ToastUtils;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraXActivity extends AppCompatActivity {
 
     private ImageCapture imageCapture;
     private final int REQUEST_CODE_PERMISSIONS = 1001;
@@ -35,25 +39,47 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
-
+        setContentView(R.layout.activity_camera_x);
 
 
         scanCamera();
     }
 
 
+    @SuppressLint("WrongConstant")
     private CameraSelector cameraSelector;
 
     private void scanCamera() {
-        AlertDialog alertDialog = DialogUtils.createItemsDialog(this, "选择摄像头", new String[]{"前置", "后置"}, new DialogInterface.OnClickListener() {
+
+        String[] cameraIdList = new String[]{"前置摄像头", "后置摄像头"};
+        CameraManager cameraManager = getApplication().getSystemService(CameraManager.class);
+        try {
+            cameraIdList = cameraManager.getCameraIdList();
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+        String[] finalCameraIdList = cameraIdList;
+        AlertDialog alertDialog = DialogUtils.createItemsDialog(this, "选择摄像头", cameraIdList, new DialogInterface.OnClickListener() {
+            @SuppressLint({"WrongConstant", "UnsafeOptInUsageError"})
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which == 0) {
-                    cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;
-                } else {
-                    cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+//                if (which == 0) {
+//                    cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;
+//                } else {
+//                    cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+//                }
+
+                int lensFacing = 0;
+                try {
+                    lensFacing=Integer.parseInt(finalCameraIdList[which]);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    lensFacing=which;
                 }
+
+                ToastUtils.show( "选择了" + lensFacing);
+                cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
+
                 dialog.dismiss();
                 // 申请相机权限
                 if (allPermissionsGranted()) {
@@ -92,7 +118,7 @@ public class CameraActivity extends AppCompatActivity {
 
                 imageCapture = new ImageCapture.Builder()
                         .setTargetRotation(getWindowManager().getDefaultDisplay().getRotation())
-                        .setTargetResolution(new Size(1369,1824))
+                        .setTargetResolution(new Size(1369, 1824))
                         .setJpegQuality(85)
                         .build();
 
@@ -102,7 +128,7 @@ public class CameraActivity extends AppCompatActivity {
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
                 // 绑定生命周期与相机
-                cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageCapture,preview);
+                cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageCapture, preview);
 
                 // 自动抓拍
 //                autoCapturePhoto();
@@ -133,7 +159,7 @@ public class CameraActivity extends AppCompatActivity {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         // 抓拍成功，图片已保存
-                        Toast.makeText(CameraActivity.this, "图片已保存: " + photoFile.getAbsolutePath(),
+                        Toast.makeText(CameraXActivity.this, "图片已保存: " + photoFile.getAbsolutePath(),
                                 Toast.LENGTH_SHORT).show();
                     }
 
