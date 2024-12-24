@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraXActivity" />
+        <activity android:name=".Camera0Activity" />
         <activity android:name=".Camera3Activity" />
 
         <service

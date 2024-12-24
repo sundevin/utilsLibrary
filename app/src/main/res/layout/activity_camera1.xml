@@ -13,5 +13,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Camera_1拍照" />
+        android:text="Camera_1 拍照" />
 </RelativeLayout>

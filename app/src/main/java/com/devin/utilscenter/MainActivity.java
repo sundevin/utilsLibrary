@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //                    openWeChat();
 //                }
 
-                startActivity(new Intent(MainActivity.this, CameraXActivity.class));
+                startActivity(new Intent(MainActivity.this, Camera0Activity.class));
 
 //                startService(new Intent(MainActivity.this, CameraService.class));
             }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         btnCameraX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CameraXActivity.class));
+                startActivity(new Intent(MainActivity.this, Camera0Activity.class));
             }
         });
 

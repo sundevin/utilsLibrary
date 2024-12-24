@@ -29,7 +29,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
 
-public class CameraXActivity extends AppCompatActivity {
+public class Camera0Activity extends AppCompatActivity {
 
     private ImageCapture imageCapture;
     private final int REQUEST_CODE_PERMISSIONS = 1001;
@@ -39,7 +39,7 @@ public class CameraXActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera_x);
+        setContentView(R.layout.activity_camera_0);
 
 
         scanCamera();
@@ -159,7 +159,7 @@ public class CameraXActivity extends AppCompatActivity {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         // 抓拍成功，图片已保存
-                        Toast.makeText(CameraXActivity.this, "图片已保存: " + photoFile.getAbsolutePath(),
+                        Toast.makeText(Camera0Activity.this, "图片已保存: " + photoFile.getAbsolutePath(),
                                 Toast.LENGTH_SHORT).show();
                     }
 
