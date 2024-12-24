@@ -33,7 +33,7 @@
         android:id="@+id/btn_camera_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CameraX方案" />
+        android:text="Camera0方案" />
 
     <Button
         android:id="@+id/btn_camera_1"
